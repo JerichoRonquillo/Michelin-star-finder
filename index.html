@@ -11,19 +11,25 @@
     
 </body>
     <script src="./assets/script.js"></script>
-    <form class= "userInput">
-        <input placeholder= "City/Address" id="location">
+    <div class= "userInput">
+        <div id="locationDiv">
+            <input placeholder= "City/Address" id="location">
+        </div>
 
-        <label>Distance</label>
-        <select name="cars" id="cars">
-            <option value="1-mile">> 1 mile</option>
-            <option value="">> 5 mile</option>
-            <option value="mercedes">> 10 mile</option>
-            <option value="audi">> 20 mile</option>
-          </select>
-
-        <input placeholder= "Types of fuel" id="fuelType">
-    </form>
+        <div id="distance">
+            <label>Distance</label>
+        
+                <select name="miles" id="dropDownValues">
+                <option value="1-mile">> 1 mile</option>
+                <option value="5-miles">> 5 miles</option>
+                <option value="10-miles">> 10 miles</option>
+                <option value="20-miles">> 20 miles</option>
+            </select>
+          </div>
+        <div id="fuelTypeDiv">
+            <input placeholder= "Types of fuel" id="fuelType">
+        </div>
+        </div>
 
     <div id="resultContainer">
 
