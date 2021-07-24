@@ -1,0 +1,23 @@
+.userInput {
+    margin-top: 50px;
+    margin-left: 24px;
+    border: 2px lightgray;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: lightgrey;
+}
+
+.userInput {
+    float: left;
+    
+}
+
+#distance {
+    margin-top: 20px;
+}
+
+#fuelTypeDiv {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+}

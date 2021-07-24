@@ -8,7 +8,43 @@
     <title>*Best Gas Price Finder*</title>
 </head>
 <body>
-    
+    <div class= "userInput">
+        <div id="locationDiv">
+            <input placeholder= "City/Address" id="location">
+        </div>
+
+        <div id="distance">
+            <label>Distance</label>
+        
+                <select name="miles" id="dropDownValues">
+                <option value="1-mile">> 1 mile</option>
+                <option value="5-miles">> 5 miles</option>
+                <option value="10-miles">> 10 miles</option>
+                <option value="20-miles">> 20 miles</option>
+            </select>
+          </div>
+        <div id="fuelTypeDiv">
+            <label>Fuel Type</label>
+                <select name="fuelType" id="dropDownFuelTypes">
+                <option value="regular">Regular</option>
+                <option value="supreme">Supereme</option>
+                <option value="diesel">Diesel</option>
+                <option value="electric">Electric</option>
+            </select>
+        </div>
+        <div>
+            <button id='search'>Search</button>
+        </div>
+        </div>
+
+    <div id="resultContainer">
+
+    </div>
+
+    <div id="map">
+
+    </div>
 </body>
     <script src="./assets/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </html>
