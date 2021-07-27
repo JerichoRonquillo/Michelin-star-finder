@@ -1,3 +1,4 @@
+  
 .userInput {
     margin-top: 50px;
     margin-left: 24px;
@@ -5,12 +6,9 @@
     padding: 10px;
     border-radius: 10px;
     background-color: lightgrey;
+   
 }
 
-.userInput {
-    float: left;
-    
-}
 
 #distance {
     margin-top: 20px;
@@ -21,3 +19,16 @@
     margin-bottom: 20px;
     
 }
+
+#map {
+    float:right;
+    border: 2px lightcoral;
+    padding: 10px;
+    background-color: lightgrey;
+
+}
+
+#resultContainer {
+ float: center;   
+}
+
