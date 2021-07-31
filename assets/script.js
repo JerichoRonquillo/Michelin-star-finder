@@ -1,6 +1,10 @@
 (async () => {
     const response = await fetch(
+<<<<<<< HEAD
         'https://parseapi.back4app.com/classes/MichelinGuide_Restaurants?limit=1000', // &order=-Stars (desc), &order=Stars (asc), &order=-Price (desc), &order=Price(asc)
+=======
+        'https://parseapi.back4app.com/classes/MichelinGuide_Restaurants?limit=1000&order=-Stars',
+>>>>>>> 47694c0851019b26c4533756ebaabda57b177f02
       {
         headers: {
           'X-Parse-Application-Id': 'i3w1okhZrfHaMxNFmpor1bzgo7jVF8g8dxbl245e', // This is your app's application id
@@ -8,7 +12,11 @@
         }
       }
     );
+<<<<<<< HEAD
     const data = await response.json(); 
+=======
+    const data = await response.json(); // Here you have the data that you need
+>>>>>>> 47694c0851019b26c4533756ebaabda57b177f02
     localStorage.setItem("data", JSON.stringify(data));
   })();
 
