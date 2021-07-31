@@ -8,7 +8,7 @@
         }
       }
     );
-    const data = await response.json(); // Here you have the data that you need
+    const data = await response.json(); 
     localStorage.setItem("data", JSON.stringify(data));
   })();
 
