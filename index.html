@@ -4,46 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/style.css"/>
     <link rel="stylesheet" href="assets/css/foundation.css">
-    <title>*Best Gas Price Finder*</title>
+    <link rel="stylesheet" href="./assets/style.css"/>
+    <title>MRF</title>
 </head>
 <body>
-    <class class= "userInput hide">
-        <div id="locationDiv">
-            <input placeholder= "City/Address" id="location">
-        </div>
 
-        <div id="distance">
-            <label>Distance</label>
+    <div class="top-bar">
+        <div id="innerHeader">
+            <h1> STAR<strong class="FINDER">FINDER</strong></h1>
+
+        </div>
         
-                <select name="miles" id="dropDownValues">
-                <option value="1-mile">< 1 mile</option>
-                <option value="5-miles">< 5 miles</option>
-                <option value="10-miles">< 10 miles</option>
-                <option value="20-miles">< 20 miles</option>
-            </select>
-          </div>
-        <div id="fuelTypeDiv">
-            <label>Fuel Type</label>
-                <select name="fuelType" id="dropDownFuelTypes">
-                <option value="regular">Regular</option>
-                <option value="electric">Mid-Grade</option>
-                <option value="premium">Premium</option>
-                <option value="diesel">Diesel</option>
-                
-            </select>
-        </div>
-        <div>
-            <button id='search'>Search</button>
-        </div>
-        </div>
-
-    <div id="resultContainer" class="float-center">
-
+    
     </div>
 
-    <div id="map" class="float-right">
+    <div class="flex-container align-center userInput">
+        <div><input placeholder= "City/Address" id="location">
+    </div>
+        <div>
+        <select name="stars" id="dropNumStars">
+            <option value="starsHighLow">Stars (high to low)</option>
+            <option value="starsLowHigh">Stars (low to high)</option>
+            <option value="priceHighLow">Price (high to low)</option>
+            <option value="priceLowHigh">Price (low to high)</option>
+        </select>
+        </div>
+        
+    </div>
+    <div class="flex-container align-center">
+        <button type="button" class="button rounded bordered shadow secondary">Search</button>
+    </div>
+    <hr id="hr1">
+    <hr id="hr2">    
+    <div class="container">
 
     </div>
 </body>
