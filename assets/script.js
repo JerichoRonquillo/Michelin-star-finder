@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 (async () => {
     const response = await fetch(
         'https://parseapi.back4app.com/classes/MichelinGuide_Restaurants?limit=1000', // &order=-Stars (desc), &order=Stars (asc), &order=-Price (desc), &order=Price(asc)
@@ -11,17 +12,60 @@
     const data = await response.json(); 
     localStorage.setItem("data", JSON.stringify(data));
   })();
+=======
+var baseApiUrl
+
+function editURLGivenInput() {
+  baseApiUrl = 'https://parseapi.back4app.com/classes/MichelinGuide_Restaurants?limit=1000';
+
+  var sortBy = document.querySelector("select").value;
+
+  if (sortBy == "starsHighLow") {
+    baseApiUrl += "&order=-Stars";
+  } else if (sortBy == "starsLowHigh") {
+    baseApiUrl += "&order=Stars";
+  } else if (sortBy == "priceHighLow") {
+    baseApiUrl += "&order=-price";
+  } else if (sortBy == "priceLowHigh") {
+    baseApiUrl += "&order=price";
+  }
+}
+
+function fetchRestaurants() {
+  (async () => {
+      const response = await fetch(
+          baseApiUrl, // &order=-Stars (desc), &order=Stars (asc), &order=-Price (desc), &order=Price(asc)
+        {
+          headers: {
+            'X-Parse-Application-Id': 'i3w1okhZrfHaMxNFmpor1bzgo7jVF8g8dxbl245e', // This is your app's application id
+            'X-Parse-REST-API-Key': 'l2cZa5ij4wJio7VXQLYZSgolUaSUb1rau3qBc9OC', // This is your app's REST API key
+          }
+        }
+      );
+      const data = await response.json(); // Here you have the data that you need
+      localStorage.setItem("data", JSON.stringify(data));
+    })();
+}
+>>>>>>> af98fcec8511f750142fa8da8b31d363c163c93a
 
 document.querySelector("#search").addEventListener("click", function(event) {
     targetButton = event.target;
 
+    document.querySelector("#resultsContainer").innerHTML = "";
+
+    editURLGivenInput();
+
+    fetchRestaurants();
+
     var data = JSON.parse(localStorage.getItem("data"));
     console.log(data.results.length)
 
-    var searchResultDiv = document.createElement("div");
-    searchResultDiv.setAttribute("id","searchResultDiv");
-
     for (let i = 0; i <= data.results.length; i++) {
+        var index = "Index" + i.toString();
+        var searchResultDiv = document.createElement("div");
+        searchResultDiv.setAttribute("id","searchResultDiv");
+        searchResultDiv.setAttribute("id", index);
+
         var restaurantName = document.createElement("h2");
         restaurantName.textContent = data.results[i].name;
         searchResultDiv.appendChild(restaurantName);
@@ -38,10 +82,10 @@ document.querySelector("#search").addEventListener("click", function(event) {
         pricePoint.textContent = data.results[i].price;
         searchResultDiv.appendChild(pricePoint);
 
-        var restaurantStars = document.createElement("h1");
+        var restaurantStars = document.createElement("h2");
         restaurantStars.textContent = data.results[i].Stars;
         searchResultDiv.appendChild(restaurantStars);
 
-        document.querySelector("#resultContainer").appendChild(searchResultDiv);       
+        document.querySelector("#resultsContainer").appendChild(searchResultDiv);       
 }
 })
