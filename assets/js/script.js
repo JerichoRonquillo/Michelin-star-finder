@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-(async () => {
-    const response = await fetch(
-        'https://parseapi.back4app.com/classes/MichelinGuide_Restaurants?limit=1000', // &order=-Stars (desc), &order=Stars (asc), &order=-Price (desc), &order=Price(asc)
-      {
-        headers: {
-          'X-Parse-Application-Id': 'i3w1okhZrfHaMxNFmpor1bzgo7jVF8g8dxbl245e', // This is your app's application id
-          'X-Parse-REST-API-Key': 'l2cZa5ij4wJio7VXQLYZSgolUaSUb1rau3qBc9OC', // This is your app's REST API key
-        }
-      }
-    );
-    const data = await response.json(); 
-    localStorage.setItem("data", JSON.stringify(data));
-  })();
-=======
 var baseApiUrl
 
 function editURLGivenInput() {
@@ -46,11 +31,8 @@ function fetchRestaurants() {
       localStorage.setItem("data", JSON.stringify(data));
     })();
 }
->>>>>>> af98fcec8511f750142fa8da8b31d363c163c93a
 
 document.querySelector("#search").addEventListener("click", function(event) {
-    targetButton = event.target;
-
     document.querySelector("#resultsContainer").innerHTML = "";
 
     editURLGivenInput();
