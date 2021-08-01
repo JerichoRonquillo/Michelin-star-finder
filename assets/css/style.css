@@ -37,3 +37,7 @@ h1 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color:white
 }
+#map{
+    height:500px;
+    width:100%;
+}
