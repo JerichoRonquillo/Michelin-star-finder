@@ -17,7 +17,6 @@ function editURLGivenInput() {
     baseApiUrl += "&order=price";
   }
 }
-
 function fetchRestaurants() {
   (async () => {
     const response = await fetch(
@@ -129,3 +128,38 @@ function distanceBetween(lat1, lon1, lat2, lon2) {
 
   return d;
 };
+
+function initMap(){
+  var options = {
+    zoom: 13,
+    center:{lat:34.0522,lng:-118.2437}
+  }
+
+  var map = new 
+  google.maps.Map(document.getElementById('map'), options);
+
+  fetchRestaurants();
+  var data = JSON.parse(localStorage.getItem("data"));
+for (let i = 0; i <= data.results.length; i++) {
+  var latitude = data.results[i].Location.latitude;
+  var longitude = data.results[i].Location.longitude;
+  var restaurantName = data.results[i].name;
+  console.log[latitude];
+
+  new google.maps.InfoWindow({
+    content: restaurantName,
+  })
+  
+  addMarker({lat:latitude,lng:longitude});
+
+  function addMarker(coords){
+    var marker = new google.maps.Marker({
+      position:coords,
+      map,
+    })
+  }
+    marker.addEventListener('click', function(){
+      InfoWindow.open(map,marker);
+    })
+} 
+}
