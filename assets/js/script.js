@@ -1,7 +1,9 @@
 var baseApiUrl
 
+var restaurantInfoPlusDistances = [];
+
 function editURLGivenInput() {
-  baseApiUrl = 'https://parseapi.back4app.com/classes/MichelinGuide_Restaurants?limit=1000';
+  baseApiUrl = 'https://parseapi.back4app.com/classes/MichelinGuide_Restaurants?limit=10';
 
   var sortBy = document.querySelector("select").value;
 
@@ -18,56 +20,112 @@ function editURLGivenInput() {
 
 function fetchRestaurants() {
   (async () => {
-      const response = await fetch(
-          baseApiUrl, // &order=-Stars (desc), &order=Stars (asc), &order=-Price (desc), &order=Price(asc)
-        {
-          headers: {
-            'X-Parse-Application-Id': 'i3w1okhZrfHaMxNFmpor1bzgo7jVF8g8dxbl245e', // This is your app's application id
-            'X-Parse-REST-API-Key': 'l2cZa5ij4wJio7VXQLYZSgolUaSUb1rau3qBc9OC', // This is your app's REST API key
-          }
-        }
-      );
-      const data = await response.json(); // Here you have the data that you need
-      localStorage.setItem("data", JSON.stringify(data));
-    })();
+    const response = await fetch(
+      baseApiUrl, // &order=-Stars (desc), &order=Stars (asc), &order=-Price (desc), &order=Price(asc)
+    {
+      headers: {
+        'X-Parse-Application-Id': 'i3w1okhZrfHaMxNFmpor1bzgo7jVF8g8dxbl245e', // This is your app's application id
+        'X-Parse-REST-API-Key': 'l2cZa5ij4wJio7VXQLYZSgolUaSUb1rau3qBc9OC', // This is your app's REST API key
+      }
+    }
+    );
+  const data = await response.json(); // Here you have the data that you need
+  localStorage.setItem("data", JSON.stringify(data));
+  var restaurantData = JSON.parse(localStorage.getItem("data")) || {results:[]};
+  // console.log(restaurantData.results[1].Stars);
+
+  for (let i = 0; i < restaurantData.results.length; i++) {
+    var card = document.createElement("div");
+    card.setAttribute("class", 'card cell small-4');
+    card.setAttribute('style', 'width:300px;');
+
+    var cell = document.createElement("div");
+    cell.setAttribute("class","cell");
+
+    var stars = document.createElement("div");
+    stars.setAttribute("class", "card-divider");
+    stars.setAttribute("id","restaurantStars");
+    console.log(restaurantData.results[i].Stars);
+    stars.textContent = restaurantData.results[i].Stars;
+    cell.appendChild(stars);
+
+    var searchResultDiv = document.createElement("div");
+    searchResultDiv.setAttribute("class","card-section");
+
+    var restaurantName = document.createElement("div");
+    restaurantName.setAttribute("id", "restaurantName");
+    restaurantName.textContent = restaurantData.results[i].name;
+    searchResultDiv.appendChild(restaurantName);
+
+    var restaurantLocation = document.createElement("div");
+    restaurantLocation.setAttribute("id", "restaurantLocation");
+    restaurantLocation.textContent = restaurantData.results[i].city + ", " + restaurantData.results[i].region;
+    searchResultDiv.appendChild(restaurantLocation);
+
+    var restaurantCoordinates = document.createElement("div");
+    restaurantCoordinates.setAttribute("id", "restaurantCoordinates");
+    restaurantCoordinates.textContent = restaurantData.results[i].Location.latitude + ", " + restaurantData.results[i].Location.longitude;
+    searchResultDiv.appendChild(restaurantCoordinates);
+
+    var pricePoint = document.createElement("div");
+    restaurantLocation.setAttribute("id", "restaurantPrice");
+    pricePoint.textContent = restaurantData.results[i].price;
+    searchResultDiv.appendChild(pricePoint);
+
+    cell.appendChild(stars);
+    cell.appendChild(searchResultDiv);
+    card.appendChild(cell);
+    document.querySelector("#resultsContainer").appendChild(card);
+}
+
+inputToGeocode();
+
+  })();
 }
 
 document.querySelector("#search").addEventListener("click", function(event) {
-    document.querySelector("#resultsContainer").innerHTML = "";
+  document.querySelector("#resultsContainer").innerHTML = "";
 
-    editURLGivenInput();
+  editURLGivenInput();
 
-    fetchRestaurants();
+  fetchRestaurants();
+});
 
-    var data = JSON.parse(localStorage.getItem("data"));
-    console.log(data.results.length)
 
-    for (let i = 0; i <= data.results.length; i++) {
-        var index = "Index" + i.toString();
-        var searchResultDiv = document.createElement("div");
-        searchResultDiv.setAttribute("id","searchResultDiv");
-        searchResultDiv.setAttribute("id", index);
+function inputToGeocode() {
+  localStorage.removeItem("originLat");
+  localStorage.removeItem("originLon");
+  localStorage.removeItem("cityInput");
 
-        var restaurantName = document.createElement("h2");
-        restaurantName.textContent = data.results[i].name;
-        searchResultDiv.appendChild(restaurantName);
+  cityInput = $("input").val();
+  localStorage.setItem("cityInput", cityInput);
+  console.log(cityInput);
 
-        var restaurantLocation = document.createElement("h3");
-        restaurantLocation.textContent = data.results[i].city + ", " + data.results[i].region;
-        searchResultDiv.appendChild(restaurantLocation);
+  var geocodeApiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cityInput + "&key=AIzaSyDLVE-nNKtlYdWbiVu1akeeGNtZ9fZKTAw";
+  fetch(geocodeApiUrl).then(function (response) {
+      response.json().then(function (data) {
+          console.log(data);
+          localStorage.setItem("originLat", data.results[0].geometry.location.lat);
+          localStorage.setItem("originLon", data.results[0].geometry.location.lng);
+      });
+    });
 
-        var restaurantCoordinates = document.createElement("h3");
-        restaurantCoordinates.textContent = data.results[i].Location.latitude + ", " + data.results[i].Location.longitude;
-        searchResultDiv.appendChild(restaurantCoordinates);
+  // distanceBetween(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng, )
+};
 
-        var pricePoint = document.createElement("h3");
-        pricePoint.textContent = data.results[i].price;
-        searchResultDiv.appendChild(pricePoint);
+function distanceBetween(lat1, lon1, lat2, lon2) {
+  const R = 6371e3; // metres
+  const φ1 = lat1 * Math.PI/180; // φ, λ in radians
+  const φ2 = lat2 * Math.PI/180;
+  const Δφ = (lat2-lat1) * Math.PI/180;
+  const Δλ = (lon2-lon1) * Math.PI/180;
 
-        var restaurantStars = document.createElement("h2");
-        restaurantStars.textContent = data.results[i].Stars;
-        searchResultDiv.appendChild(restaurantStars);
+  const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ/2) * Math.sin(Δλ/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        document.querySelector("#resultsContainer").appendChild(searchResultDiv);       
-}
-})
+  const d = R * c;  // in metres
+
+  return d;
+};

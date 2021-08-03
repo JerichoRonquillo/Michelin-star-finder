@@ -19,7 +19,6 @@ h1 {
     height: 20px;
 }
 #hr2 {
-    margin-bottom: 50px;
     margin-top: 500px;
 }
 #backgroundImg {
@@ -36,4 +35,14 @@ h1 {
 .FINDER {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color:white
+}
+.container {
+    background-color: #101010;
+    color: white;
+    padding: 30px;
+}
+.card {
+    border-radius: 10px;
+    border-color:goldenrod;
+    border-width: 4px;
 }
