@@ -9,7 +9,6 @@
     <title>MRF</title>
 </head>
 <body>
-
     <div class="top-bar">
         <div id="innerHeader">
             <h1> STAR<strong class="FINDER">FINDER</strong></h1>
@@ -18,7 +17,7 @@
 
     <div id="backgroundImg">
     <div class="flex-container align-center userInput">
-        <div><input placeholder= "City/Address" id="location">
+        <div><input placeholder= "City" id="location">
     </div>
         <div>
         <select name="stars" id="dropNumStars">
@@ -37,11 +36,23 @@
     <hr id="hr1">
     <hr id="hr2">  
     </div>  
-    <div id='map'></div>
-    <div class="container" id="resultsContainer">
+    <div class="grid-x grid-margin-x container" id="resultsContainer" data-reveal>
+        <div class = "card cell small-4 " style="width: 300px;">
+            <div class="cell">
+            <div class = "card-divider" id="restaurantStars">
+                Stars
+            </div>
+            <div class="card-section">
+                <div id ="restaurantName">Name</div>
+                <div id ="restaurantLocation">Location</div>
+                <div id ="restaurantCoordinates">address</div>
+                <div id ="restaurantPrice">Price</div>
+            </div>
+        </div>
     </div>
-
-    
+    </div>
+    <div id='map'></div>
+   
 </body>
     <script src="./assets/js/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
