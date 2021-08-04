@@ -149,14 +149,66 @@ function distanceBetween(lat1, lon1, lat2, lon2) {
   return d;
 };
 
-function initMap(){
-  var options = {
+function initAutocomplete() {
+  const map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat:34.0522,lng:-118.2437},
     zoom: 13,
-    center:{lat:34.0522,lng:-118.2437}
-  }
+  });
 
-  var map = new 
-  google.maps.Map(document.getElementById('map'), options);
+  const input = document.getElementById('location');
+  const searchBox = new google.maps.places.SearchBox(input);
+  map.controls.push(input);
+
+  map.addListener("bounds_changed", () => {
+    searchBox.setBounds(map.getBounds());
+  });
+  let markers = [];
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener("places_changed", () => {
+    const places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+    // Clear out the old markers.
+    markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+    markers = [];
+    // For each place, get the icon, name and location.
+    const bounds = new google.maps.LatLngBounds();
+    places.forEach((place) => {
+      if (!place.geometry || !place.geometry.location) {
+        console.log("Returned place contains no geometry");
+        return;
+      }
+      const icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25),
+      };
+      // Create a marker for each place.
+      markers.push(
+        new google.maps.Marker({
+          map,
+          icon,
+          title: place.name,
+          position: place.geometry.location,
+        })
+      );
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
 
   var data = JSON.parse(localStorage.getItem("data"));
 for (let i = 0; i <= data.results.length; i++) {
@@ -175,10 +227,7 @@ for (let i = 0; i <= data.results.length; i++) {
     var marker = new google.maps.Marker({
       position:coords,
       map,
-    })
+      });
+    }
   }
-    marker.addEventListener('click', function(){
-      InfoWindow.open(map,marker);
-    })
-}
-}
+} 

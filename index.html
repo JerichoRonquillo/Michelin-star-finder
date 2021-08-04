@@ -17,7 +17,7 @@
 
     <div id="backgroundImg">
     <div class="flex-container align-center userInput">
-        <div><input placeholder= "City" id="location">
+        <div><input placeholder= "City or Address" id="location" class='controls'>
     </div>
         <div>
         <select name="stars" id="dropNumStars">
@@ -35,7 +35,8 @@
     </div>
     <hr id="hr1">
     <hr id="hr2">  
-    </div>  
+    </div>
+    <div id='map'></div>  
     <div class="grid-x grid-margin-x container" id="resultsContainer" data-reveal>
         <div class = "card cell small-4 " style="width: 300px;">
             <div class="cell">
@@ -51,13 +52,13 @@
         </div>
     </div>
     </div>
-    <div id='map'></div>
+
    
 </body>
     <script src="./assets/js/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/js/vendor.js"></script>
     <script src="assets/js/foundation.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9LvfcEz6wzb1Eq_9EzBNaXC7wFAu1kwo&callback=initMap">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMgACnodvZgSkUD3I6FcUlKOB2CMaBsaU&callback=initAutocomplete&libraries=places&v=weekly">
 </script>
 </html>
