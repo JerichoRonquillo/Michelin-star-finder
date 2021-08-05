@@ -77,6 +77,7 @@ function fetchRestaurants() {
     });
   }
 
+  
   for (let i = 0; i < trimmedRestaurants.length; i++) {
 
     var card = document.createElement("div");
