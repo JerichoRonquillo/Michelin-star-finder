@@ -77,7 +77,7 @@ function fetchRestaurants() {
     });
   }
 
-  
+
   for (let i = 0; i < trimmedRestaurants.length; i++) {
 
     var card = document.createElement("div");
@@ -212,6 +212,7 @@ function initAutocomplete() {
   });
 
   var data = JSON.parse(localStorage.getItem("data"));
+  
 for (let i = 0; i <= data.results.length; i++) {
   var latitude = data.results[i].Location.latitude;
   var longitude = data.results[i].Location.longitude;
