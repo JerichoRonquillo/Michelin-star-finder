@@ -44,6 +44,7 @@ function fetchRestaurants() {
       {
         stars: restaurantData.results[i].Stars,
         name: restaurantData.results[i].name,
+        cuisine: restaurantData.results[i].cuisine,
         location: restaurantData.results[i].city + ", " + restaurantData.results[i].region,
         distance: distanceBetween(+localStorage.getItem("originLat"), +localStorage.getItem("originLon"), +restaurantData.results[i].Location.latitude, +restaurantData.results[i].Location.longitude),
         price: restaurantData.results[i].price
@@ -90,7 +91,13 @@ function fetchRestaurants() {
     var stars = document.createElement("div");
     stars.setAttribute("class", "card-divider");
     stars.setAttribute("id","restaurantStars");
-    stars.textContent = trimmedRestaurants[i].stars;
+    if (trimmedRestaurants[i].stars == "1") {
+      stars.innerHTML = "<span class='fa fa-star checked'></span>"
+    } else if (trimmedRestaurants[i].stars == "2") {
+      stars.innerHTML = "<span class='fa fa-star checked'></span><span class='fa fa-star checked'></span>"
+    } else if (trimmedRestaurants[i].stars == "3") {
+      stars.innerHTML = "<span class='fa fa-star checked'></span><span class='fa fa-star checked'></span><span class='fa fa-star checked'></span>"
+    }
     cell.appendChild(stars);
 
     var searchResultDiv = document.createElement("div");
@@ -100,6 +107,11 @@ function fetchRestaurants() {
     restaurantName.setAttribute("id", "restaurantName");
     restaurantName.textContent = trimmedRestaurants[i].name;
     searchResultDiv.appendChild(restaurantName);
+
+    var restaurantCuisine = document.createElement("div");
+    restaurantCuisine.setAttribute("id", "restaurantCuisine");
+    restaurantCuisine.textContent = trimmedRestaurants[i].cuisine;
+    searchResultDiv.appendChild(restaurantCuisine);
 
     var restaurantLocation = document.createElement("div");
     restaurantLocation.setAttribute("id", "restaurantLocation");
@@ -112,7 +124,7 @@ function fetchRestaurants() {
     searchResultDiv.appendChild(restaurantCoordinates);
 
     var pricePoint = document.createElement("div");
-    restaurantLocation.setAttribute("id", "restaurantPrice");
+    pricePoint.setAttribute("id", "restaurantPrice");
     pricePoint.textContent = trimmedRestaurants[i].price;
     searchResultDiv.appendChild(pricePoint);
 
