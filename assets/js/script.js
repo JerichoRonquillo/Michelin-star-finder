@@ -1,4 +1,3 @@
-require("dotenv").config()
 var restaurantInfoPlusDistances
 
 function inputToGeocode() {
@@ -9,7 +8,7 @@ function inputToGeocode() {
   var cityInput = $("input").val();
   localStorage.setItem("cityInput", cityInput);
 
-  var geocodeApiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cityInput + "?key=" + process.env.GOOGLE_GEO_KEY;
+  var geocodeApiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cityInput + "&key=AIzaSyBQpg6lWd6ZoaQPZcGm-orGfyXu_9vZM-k";
   fetch(geocodeApiUrl).then(function (response) {
     response.json().then(function (data) {
       localStorage.setItem("originLat", data.results[0].geometry.location.lat);
@@ -25,8 +24,8 @@ function fetchRestaurants() {
       "https://parseapi.back4app.com/classes/MichelinGuide_Restaurants?limit=695", // &order=-Stars (desc), &order=Stars (asc), &order=-Price (desc), &order=Price(asc)
       {
         headers: {
-          'X-Parse-Application-Id': process.env.MICH_APP_KEY, // This is your app's application id
-          'X-Parse-REST-API-Key': process.env.MICH_API_KEY, // This is your app's REST API key
+          'X-Parse-Application-Id': 'i3w1okhZrfHaMxNFmpor1bzgo7jVF8g8dxbl245e', // This is your app's application id
+          'X-Parse-REST-API-Key': 'l2cZa5ij4wJio7VXQLYZSgolUaSUb1rau3qBc9OC', // This is your app's REST API key
         }
       }
     );
@@ -41,17 +40,17 @@ function fetchRestaurants() {
 
     for (let i = 0; i < restaurantData.results.length; i++) {
 
-    restaurantInfoPlusDistances.push(
-      {
-        stars: restaurantData.results[i].Stars,
-        name: restaurantData.results[i].name,
-        cuisine: restaurantData.results[i].cuisine,
-        location: restaurantData.results[i].city + ", " + restaurantData.results[i].region,
-        distance: distanceBetween(+localStorage.getItem("originLat"), +localStorage.getItem("originLon"), +restaurantData.results[i].Location.latitude, +restaurantData.results[i].Location.longitude),
-        price: restaurantData.results[i].price
-      }
-    )
-}
+      restaurantInfoPlusDistances.push(
+        {
+          stars: restaurantData.results[i].Stars,
+          name: restaurantData.results[i].name,
+          cuisine: restaurantData.results[i].cuisine,
+          location: restaurantData.results[i].city + ", " + restaurantData.results[i].region,
+          distance: distanceBetween(+localStorage.getItem("originLat"), +localStorage.getItem("originLon"), +restaurantData.results[i].Location.latitude, +restaurantData.results[i].Location.longitude),
+          price: restaurantData.results[i].price
+        }
+      )
+    }
 
     var sortedRestaurants = restaurantInfoPlusDistances.sort(function (a, b) {
       return a.distance - b.distance;
@@ -79,7 +78,8 @@ function fetchRestaurants() {
       });
     }
 
-  for (let i = 0; i < trimmedRestaurants.length; i++) {
+
+    for (let i = 0; i < trimmedRestaurants.length; i++) {
 
       var card = document.createElement("div");
       card.setAttribute("class", 'card cell small-4');
@@ -88,17 +88,17 @@ function fetchRestaurants() {
       var cell = document.createElement("div");
       cell.setAttribute("class", "cell");
 
-    var stars = document.createElement("div");
-    stars.setAttribute("class", "card-divider");
-    stars.setAttribute("id","restaurantStars");
-    if (trimmedRestaurants[i].stars == "1") {
-      stars.innerHTML = "<span class='fa fa-star checked'></span>"
-    } else if (trimmedRestaurants[i].stars == "2") {
-      stars.innerHTML = "<span class='fa fa-star checked'></span><span class='fa fa-star checked'></span>"
-    } else if (trimmedRestaurants[i].stars == "3") {
-      stars.innerHTML = "<span class='fa fa-star checked'></span><span class='fa fa-star checked'></span><span class='fa fa-star checked'></span>"
-    }
-    cell.appendChild(stars);
+      var stars = document.createElement("div");
+      stars.setAttribute("class", "card-divider");
+      stars.setAttribute("id", "restaurantStars");
+      if (trimmedRestaurants[i].stars == "1") {
+        stars.innerHTML = "<span class='fa fa-star checked'></span>"
+      } else if (trimmedRestaurants[i].stars == "2") {
+        stars.innerHTML = "<span class='fa fa-star checked'></span><span class='fa fa-star checked'></span>"
+      } else if (trimmedRestaurants[i].stars == "3") {
+        stars.innerHTML = "<span class='fa fa-star checked'></span><span class='fa fa-star checked'></span><span class='fa fa-star checked'></span>"
+      }
+      cell.appendChild(stars);
 
       var searchResultDiv = document.createElement("div");
       searchResultDiv.setAttribute("class", "card-section");
@@ -108,25 +108,25 @@ function fetchRestaurants() {
       restaurantName.textContent = trimmedRestaurants[i].name;
       searchResultDiv.appendChild(restaurantName);
 
-    var restaurantCuisine = document.createElement("div");
-    restaurantCuisine.setAttribute("id", "restaurantCuisine");
-    restaurantCuisine.textContent = trimmedRestaurants[i].cuisine;
-    searchResultDiv.appendChild(restaurantCuisine);
+      var restaurantCuisine = document.createElement("div");
+      restaurantCuisine.setAttribute("id", "restaurantCuisine");
+      restaurantCuisine.textContent = trimmedRestaurants[i].cuisine;
+      searchResultDiv.appendChild(restaurantCuisine);
 
-    var restaurantLocation = document.createElement("div");
-    restaurantLocation.setAttribute("id", "restaurantLocation");
-    restaurantLocation.textContent = trimmedRestaurants[i].location;
-    searchResultDiv.appendChild(restaurantLocation);
+      var restaurantLocation = document.createElement("div");
+      restaurantLocation.setAttribute("id", "restaurantLocation");
+      restaurantLocation.textContent = trimmedRestaurants[i].location;
+      searchResultDiv.appendChild(restaurantLocation);
 
       var restaurantCoordinates = document.createElement("div");
       restaurantCoordinates.setAttribute("id", "restaurantCoordinates");
       restaurantCoordinates.textContent = Math.floor(trimmedRestaurants[i].distance / 1609).toString() + " miles away";
       searchResultDiv.appendChild(restaurantCoordinates);
 
-    var pricePoint = document.createElement("div");
-    pricePoint.setAttribute("id", "restaurantPrice");
-    pricePoint.textContent = trimmedRestaurants[i].price;
-    searchResultDiv.appendChild(pricePoint);
+      var pricePoint = document.createElement("div");
+      pricePoint.setAttribute("id", "restaurantPrice");
+      pricePoint.textContent = trimmedRestaurants[i].price;
+      searchResultDiv.appendChild(pricePoint);
 
       cell.appendChild(stars);
       cell.appendChild(searchResultDiv);
@@ -224,23 +224,23 @@ function initAutocomplete() {
   });
 
   var data = JSON.parse(localStorage.getItem("data"));
-  
-for (let i = 0; i <= data.results.length; i++) {
-  var latitude = data.results[i].Location.latitude;
-  var longitude = data.results[i].Location.longitude;
-  var restaurantName = data.results[i].name;
-  console.log[latitude];
 
-  new google.maps.InfoWindow({
-    content: restaurantName,
-  })
-  
-  addMarker({lat:latitude,lng:longitude});
+  for (let i = 0; i <= data.results.length; i++) {
+    var latitude = data.results[i].Location.latitude;
+    var longitude = data.results[i].Location.longitude;
+    var restaurantName = data.results[i].name;
+    console.log[latitude];
 
-  function addMarker(coords){
-    var marker = new google.maps.Marker({
-      position:coords,
-      map,
+    new google.maps.InfoWindow({
+      content: restaurantName,
+    })
+
+    addMarker({ lat: latitude, lng: longitude });
+
+    function addMarker(coords) {
+      var marker = new google.maps.Marker({
+        position: coords,
+        map,
       });
     }
   }
