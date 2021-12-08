@@ -40,6 +40,8 @@ h1 {
     background-color: #101010;
     color: white;
     padding: 30px;
+    display:flex;
+    justify-content: space-evenly;
 }
 .card {
     border-radius: 10px;
@@ -51,3 +53,7 @@ h1 {
     height:500px;
     width:100%;
 }
+
+.checked {
+    color: orange;
+  }
