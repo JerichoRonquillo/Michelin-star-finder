@@ -9,7 +9,7 @@ function inputToGeocode() {
   var cityInput = $("input").val();
   localStorage.setItem("cityInput", cityInput);
 
-  var geocodeApiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cityInput + process.env.GOOGLE_GEO_KEY;
+  var geocodeApiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cityInput + "?key=" + process.env.GOOGLE_GEO_KEY;
   fetch(geocodeApiUrl).then(function (response) {
     response.json().then(function (data) {
       localStorage.setItem("originLat", data.results[0].geometry.location.lat);
